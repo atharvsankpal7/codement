@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import Dropdown from "@/components/Dropdown";
-
+import Dropdown from "../../components/Dropdown";
+import Link from 'next/link'
 const Dashboard = () => {
   const [academicYear, setAcademicYear] = useState("");
   const [division, setDivision] = useState("");
@@ -26,8 +26,8 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 flex flex-col">
-      <div className="grid grid-cols-3 gap-4 my-auto">
+    <div className="container mx-auto p-4 flex flex-col h-screen ">
+      <div className="grid gap-4 mt-auto items-center  ">
         <Dropdown
           label="Academic Year"
           options={academicYearOptions}
@@ -48,10 +48,13 @@ const Dashboard = () => {
         />
       </div>
 
-      <div className="flex">
-        <button className="bg-transparent hover:bg-slate-100 text-slate-100 font-semibold hover:text-black py-2 px-4 border border-slate-100 hover:border-transparent rounded-lg my-3 hover:underline mx-auto">
+      <div className="flex mb-auto flex-col">
+        <button className="bg-transparent hover:bg-slate-100 text-slate-100 font-semibold hover:text-black py-2 px-4 border border-slate-100 hover:border-transparent rounded-lg my-3  mx-auto">
           Get Report
         </button>
+        <Link className="bg-transparent hover:bg-slate-100 text-slate-100 font-semibold hover:text-black py-2 px-4 border border-slate-100 hover:border-transparent rounded-lg my-3  mx-auto" href='/attendance'>
+          Take Attendance
+        </Link>
       </div>
     </div>
   );

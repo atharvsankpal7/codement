@@ -1,80 +1,48 @@
 "use client";
 // pages/search.js
 import { useState } from "react";
-import CourseCard from "../components/CourseCard";
+import CourseCard from "../../components/CourseCard";
 
-const coursesData = [
-  {
-    title: "Course 1",
-    price: "$99",
-    rating: "4.5",
-    reviews: "120",
-    teacher: "John Doe",
-    description: "Description for Course 1",
-    image: "https://via.placeholder.com/300",
-    link: "/courses/course-1",
-  },
-  {
-    title: "Course 2",
-    price: "$79",
-    rating: "4.2",
-    reviews: "90",
-    teacher: "Jane Smith",
-    description: "Description for Course 2",
-    image: "https://via.placeholder.com/300",
-    link: "/courses/course-2",
-  },
-  {
-    title: "Course 3 ",
-    price: "$79",
-    rating: "4.2",
-    reviews: "90",
-    teacher: "Jane Smith",
-    description: "Description for Course 2",
-    image: "https://via.placeholder.com/300",
-    link: "/courses/course-2",
-  },
-  {
-    title: "Course 4",
-    price: "$79",
-    rating: "4.2",
-    reviews: "90",
-    teacher: "Jane Smith",
-    description: "Description for Course 2",
-    image: "https://via.placeholder.com/300",
-    link: "/courses/course-2",
-  },
-  {
-    title: "Course 5",
-    price: "$79",
-    rating: "4.2",
-    reviews: "90",
-    teacher: "Jane Smith",
-    description: "Description for Course 2",
-    image: "https://via.placeholder.com/300",
-    link: "/courses/course-2",
-  },
-  {
-    title: "Course 6",
-    price: "$79",
-    rating: "4.2",
-    reviews: "90",
-    teacher: "Jane Smith",
-    description: "Description for Course 2",
-    image: "https://via.placeholder.com/300",
-    link: "/courses/course-2",
-  },
-  // Add more course data as needed
-];
+const removeHtmlTags = (input) => {
+  // Remove HTML tags
+  let cleanText = input.replace(/<[^>]*>?/gm, "");
+  // Stop rendering after the first period (.)
+  const firstPeriodIndex = cleanText.indexOf(".");
+  if (firstPeriodIndex !== -1) {
+    cleanText = cleanText.substring(0, firstPeriodIndex + 1); // Include the period
+  }
+  return cleanText;
+};
 
 const SearchPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearch = () => {
-    // Perform search logic here, such as filtering courses based on searchTerm
-
-    setSearchResults(coursesData);
+    try {
+      fetch("http://192.168.100.157:5000/process", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query: searchTerm }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const coursesArray = Object.values(data).map((course) => ({
+            ...course,
+            title: removeHtmlTags(course.title),
+          }));
+          setSearchResults(coursesArray);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          setSearchResults([]);
+        });
+    } catch (err) {
+      console.error("Error:", err);
+      setSearchResults([]);
+    }
   };
 
   return (

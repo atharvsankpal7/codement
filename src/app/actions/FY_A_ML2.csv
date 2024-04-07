@@ -1,0 +1,10 @@
+Roll,Name,Gender,Attendance_Days,Attendance_Percentage,Student_Mail,Parent_Mail
+R001,Joseph,Male,31,96.6666666666667,student1@example.com,parent1@example.com
+R002,Susan,Female,18,53.3333333333333,student2@example.com,parent2@example.com
+R003,William,Male,32,100,student3@example.com,parent3@example.com
+R004,Nancy,Female,28,90,student4@example.com,parent4@example.com
+R005,John,Male,25,76.6666666666667,student5@example.com,parent5@example.com
+R006,Jennifer,Female,17,50,student6@example.com,parent6@example.com
+R007,John,Male,17,50,student7@example.com,parent7@example.com
+R008,Sarah,Female,29,13,student8@example.com,parent8@example.com
+R009,William,Male,30,28,student9@example.com,parent9@example.com

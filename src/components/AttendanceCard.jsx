@@ -1,40 +1,45 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { updateCSV } from "../../src/app/actions/loadCSV";
+import { useRouter } from "next/navigation";
 
-const students = [
-  { rollNumber: 1, name: "John Doe" },
-  { rollNumber: 2, name: "Jane Smith" },
-  // Add more students as needed
-];
-
-const AttendanceCard = () => {
+const AttendanceCard = (props) => {
+  const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const [currentAttendance, setCurrentAttendance] = useState([]);
+  const { students } = props;
+console.log(students)
   const handleAbsent = () => {
+    setCurrentAttendance([...currentAttendance, 0]);
     setCurrentIndex((prevIndex) => prevIndex + 1);
   };
 
   const handlePresent = () => {
+    setCurrentAttendance([...currentAttendance, 1]);
     setCurrentIndex((prevIndex) => prevIndex + 1);
   };
 
   const currentStudent = students[currentIndex];
+  
 
-  if (!currentStudent) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-xl">Attendance for all students confirmed!</p>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (!currentStudent) {
+      updateCSV(currentAttendance);
+      router.push("/defaulter");
+    }
+  }, [currentStudent, currentAttendance, router]);
 
   return (
+    currentStudent &&
     <div className="flex flex-col justify-center items-center h-screen ">
       <div className=" shadow-lg p-4 rounded-lg bg-slate-700">
         <p className="text-lg font-semibold">
-          Roll Number: {currentStudent.rollNumber}
+          Roll Number: {currentStudent.Roll}
         </p>
-        <p className="text-lg mt-2">Name: {currentStudent.name}</p>
+        <p className="text-lg mt-2">Name: {currentStudent.Name}</p>
+        <p className="text-lg mt-2">
+          Attended Lectures: {currentStudent.Attendance_Days}
+        </p>
         <div className="mt-4 flex justify-center">
           <button
             onClick={handleAbsent}
