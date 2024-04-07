@@ -20,7 +20,7 @@ const SearchPage = () => {
 
   const handleSearch = () => {
     try {
-      fetch("http://192.168.100.157:5000/process", {
+      fetch("http://localhost:5000/process", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
