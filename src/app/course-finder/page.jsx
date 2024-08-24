@@ -32,7 +32,7 @@ const SearchPage = () => {
           const coursesArray = Object.values(data).map((course) => ({
             ...course,
             title: removeHtmlTags(course.title),
-          }));
+          }));  
           setSearchResults(coursesArray);
         })
         .catch((error) => {

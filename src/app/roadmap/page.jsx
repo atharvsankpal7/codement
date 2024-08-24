@@ -7,180 +7,179 @@ import {
 } from "../../components/ui/card";
 import Link from "next/link";
 
+// Example data structure for subjects, chapters, modules, and resources
+const subjectsData = [
+  {
+    title: "Physics",
+    description: "Notes for the subject of Physics.",
+    link: "https://www.cin.ufpe.br/~cavmj/Machine%20-%20Learning%20-%20Tom%20Mitchell.pdf",
+    chapters: [
+      {
+        title: "Chapter 1: Laws of Motion",
+        description: "Understanding the principles of motion.",
+        modules: [
+          {
+            title: "Module 1: Introduction",
+            description: "An overview of the laws of motion.",
+            resources: [
+              {
+                type: "Video",
+                title: "Video: Introduction to motion",
+                link: "https://www.youtube.com/watch?v=8wZugqi_uCg",
+              },
+              {
+                type: "Worksheet",
+                title: "Worksheet: Laws of motion",
+              },
+              {
+                type: "Simulation",
+                title: "Simulation: Force and acceleration",
+              },
+            ],
+          },
+          {
+            title: "Module 2: Inertia",
+            description: "Exploring the concept of inertia.",
+            resources: [
+              {
+                type: "Video",
+                title: "Video: Inertia and mass",
+              },
+              {
+                type: "Experiment",
+                title: "Experiment: Rolling ball",
+              },
+              {
+                type: "Quiz",
+                title: "Quiz: Understanding inertia",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Machine Learning",
+    description: "Notes for the subject of Machine Learning.",
+    chapters: [
+      {
+        title: "Chapter 1: Introduction to ML",
+        description: "Understanding the basics of Machine Learning.",
+        modules: [
+          {
+            title: "Module 1: Types of ML",
+            description: "An overview of different types of Machine Learning.",
+            resources: [
+              {
+                type: "Video",
+                title: "Video: Introduction to ML types",
+              },
+              {
+                type: "Worksheet",
+                title: "Worksheet: ML algorithms comparison",
+                link: "https://www.datacamp.com/cheat-sheet/machine-learning-cheat-sheet",
+              },
+              {
+                type: "Example",
+                title: "Example: Supervised vs. Unsupervised",
+              },
+            ],
+          },
+          {
+            title: "Module 2: Regression",
+            description: "Understanding regression in Machine Learning.",
+            resources: [
+              {
+                type: "Video",
+                title: "Video: Introduction to regression",
+              },
+              {
+                type: "Example",
+                title: "Example: Linear regression",
+              },
+              {
+                type: "Exercise",
+                title: "Exercise: Predictive modeling",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+];
+
 export default function Component() {
   return (
-    <div className="flex ">
-      <Card className=" max-w-2xl my-5 mx-auto  bg-slate-800 text-white">
-        <CardHeader>
-          <CardTitle>Physics</CardTitle>
-          <CardDescription>Notes for the subject of Physics.</CardDescription>
-          <Link
-            href="https://www.cin.ufpe.br/~cavmj/Machine%20-%20Learning%20-%20Tom%20Mitchell.pdf"
-            className="underline text-blue-400"
-          >
-            Go To Book
-          </Link>
-        </CardHeader>
-        <CardContent className="p-0">
-          <div className="flex gap-2 p-4 ">
-            <Card>
-              <CardHeader>
-                <CardTitle>Chapter 1: Laws of Motion</CardTitle>
-                <CardDescription>
-                  Understanding the principles of motion.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex gap-2">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Module 1: Introduction</CardTitle>
-                      <CardDescription>
-                        An overview of the laws of motion.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid gap-2">
-                        <Card>
+    <div className="flex">
+      {subjectsData.map((subject, index) => (
+        <Card
+          key={index}
+          className="max-w-2xl my-5 mx-auto bg-slate-800 text-white"
+        >
+          <CardHeader>
+            <CardTitle>{subject.title}</CardTitle>
+            <CardDescription>{subject.description}</CardDescription>
+            {subject.link && (
+              <Link href={subject.link} className="underline text-blue-400">
+                Go To Book
+              </Link>
+            )}
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="flex gap-2 p-4">
+              {subject.chapters.map((chapter, index) => (
+                <Card key={index}>
+                  <CardHeader>
+                    <CardTitle>{chapter.title}</CardTitle>
+                    <CardDescription>{chapter.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex gap-2">
+                      {chapter.modules.map((module, index) => (
+                        <Card key={index}>
                           <CardHeader>
-                            <CardTitle>Teacher's Note</CardTitle>
+                            <CardTitle>{module.title}</CardTitle>
                             <CardDescription>
-                              Additional resources for teaching this module.
+                              {module.description}
                             </CardDescription>
                           </CardHeader>
                           <CardContent>
-                            <ul className="grid gap-2 list-disc pl-8">
-                              <li>
-                                <a
-                                  href="https://www.youtube.com/watch?v=8wZugqi_uCg"
-                                  className="underline text-blue-400 "
-                                >
-                                  Video: Introduction to motion
-                                </a>
-                              </li>
-                              <li>Worksheet: Laws of motion</li>
-                              <li>Simulation: Force and acceleration</li>
-                            </ul>
+                            <div className="grid gap-2">
+                              {module.resources.map((resource, index) => (
+                                <Card key={index}>
+                                  <CardHeader>
+                                    <CardTitle>{resource.type}</CardTitle>
+                                    <CardDescription>
+                                      {resource.title}
+                                    </CardDescription>
+                                    {resource.link && (
+                                      <a
+                                        href={resource.link}
+                                        className="underline text-blue-400"
+                                      >
+                                        Go To Resource
+                                      </a>
+                                    )}
+                                  </CardHeader>
+                                </Card>
+                              ))}
+                            </div>
                           </CardContent>
                         </Card>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Module 2: Inertia</CardTitle>
-                      <CardDescription>
-                        Exploring the concept of inertia.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid gap-4">
-                        <Card>
-                          <CardHeader>
-                            <CardTitle>Teacher's Note</CardTitle>
-                            <CardDescription>
-                              Additional resources for teaching this module.
-                            </CardDescription>
-                          </CardHeader>
-                          <CardContent>
-                            <ul className="grid gap-2 list-disc pl-8">
-                              <li>Video: Inertia and mass</li>
-                              <li>Experiment: Rolling ball</li>
-                              <li>Quiz: Understanding inertia</li>
-                            </ul>
-                          </CardContent>
-                        </Card>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </CardContent>
-      </Card>
-      <Card className=" max-w-2xl my-5 bg-slate-800 mx-auto text-white">
-        <CardHeader>
-          <CardTitle>Machine Learning</CardTitle>
-          <CardDescription>
-            Notes for the subject of Machine Learning.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="p-0">
-          <div className="flex gap-2 p-4 ">
-            <Card>
-              <CardHeader>
-                <CardTitle>Chapter 1: Introduction to ML</CardTitle>
-                <CardDescription>
-                  Understanding the basics of Machine Learning.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex gap-2">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Module 1: Types of ML</CardTitle>
-                      <CardDescription>
-                        An overview of different types of Machine Learning.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid gap-2">
-                        <Card>
-                          <CardHeader>
-                            <CardTitle>Teacher's Note</CardTitle>
-                            <CardDescription>
-                              Additional resources for teaching this module.
-                            </CardDescription>
-                          </CardHeader>
-                          <CardContent>
-                            <ul className="grid gap-2 list-disc pl-8">
-                              <li>Video: Introduction to ML types</li>
-                              <li>
-                                <a href="https://www.datacamp.com/cheat-sheet/machine-learning-cheat-sheet" className="underline text-blue-400">
-                                  Worksheet: ML algorithms comparison
-                                </a>
-                              </li>
-                              <li>Example: Supervised vs. Unsupervised</li>
-                            </ul>
-                          </CardContent>
-                        </Card>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Module 2: Regression</CardTitle>
-                      <CardDescription>
-                        Understanding regression in Machine Learning.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid gap-4">
-                        <Card>
-                          <CardHeader>
-                            <CardTitle>Teacher's Note</CardTitle>
-                            <CardDescription>
-                              Additional resources for teaching this module.
-                            </CardDescription>
-                          </CardHeader>
-                          <CardContent>
-                            <ul className="grid gap-2 list-disc pl-8">
-                              <li>Video: Introduction to regression</li>
-                              <li>Example: Linear regression</li>
-                              <li>Exercise: Predictive modeling</li>
-                            </ul>
-                          </CardContent>
-                        </Card>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </CardContent>
-      </Card>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      ))}
     </div>
   );
 }
+
+// Example usage:
+// <Component data={subjectsData} />
